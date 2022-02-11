@@ -1,0 +1,25 @@
+{
+  "name": "bolaget-x-vivino",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "parcel src/manifest.json --no-hmr",
+    "demo": "parcel src/demo/index.html",
+    "build": "parcel build src/manifest.json --public-url ./"
+  },
+  "author": "Mattias Hemmingsson",
+  "devDependencies": {
+    "eslint": "^8.6.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.4",
+    "parcel-plugin-static-files-copy": "^2.6.0",
+    "parcel-plugin-web-extension-2": "^2.0.3",
+    "sass": "^1.30.0"
+  },
+  "dependencies": {
+    "regenerator-runtime": "^0.13.9",
+    "sentinel-js": "^0.0.5",
+    "string-similarity": "^4.0.4"
+  }
+}
