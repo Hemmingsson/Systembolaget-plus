@@ -1,0 +1,22 @@
+{
+  "id": "chrome-devtools_c81bff41",
+  "name": "Chrome DevTools",
+  "slug": "chrome-devtools",
+  "enabled": true,
+  "provider": "chrome-devtools",
+  "type": "mcp",
+  "icon": "\ud83e\uddea",
+  "tagline": "Inspect, automate, and debug Chrome through the DevTools MCP server",
+  "mcp": {
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "chrome-devtools-mcp@latest"
+    ],
+    "authType": "none"
+  },
+  "connectionStatus": "untested",
+  "createdAt": 1777226034213,
+  "updatedAt": 1777226034213
+}

@@ -1,0 +1,25 @@
+{
+  "id": "brave-search_c21b5613",
+  "name": "Brave Search",
+  "slug": "brave-search",
+  "enabled": true,
+  "provider": "brave",
+  "type": "mcp",
+  "icon": "\ud83d\udd0e",
+  "tagline": "Web and local search via Brave Search MCP",
+  "mcp": {
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@modelcontextprotocol/server-brave-search"
+    ],
+    "env": {
+      "BRAVE_API_KEY": "BSA-_8ldghRCboWFMVQttdl0KTMqVEo"
+    },
+    "authType": "none"
+  },
+  "connectionStatus": "untested",
+  "createdAt": 1777226034213,
+  "updatedAt": 1777226034213
+}

@@ -1,0 +1,147 @@
+# High-Signal Review
+
+Run a high-signal code review focused on objective bugs and clear instruction-file violations. Do not drift into style feedback, speculative concerns, or general improvement suggestions.
+
+## Workflow
+
+1. Launch a lightweight subagent to return a list of file paths, not contents, for all relevant repository instruction files, including:
+   - the root `AGENTS.md` file, if it exists
+   - the root `CLAUDE.md` file, if it exists
+   - any `AGENTS.md` or `CLAUDE.md` files in directories containing files modified by the workspace diff, using `mcp__conductor__GetWorkspaceDiff` with the `stat` option
+
+2. If this workspace has an associated PR, read the PR title and description, but not the PR changes. Use that as author-intent context.
+
+3. In parallel with step 2, launch a capable review subagent to inspect the changes using `mcp__conductor__GetWorkspaceDiff` and return a summary of the changes.
+
+4. Launch 4 subagents in parallel to independently review the changes using `mcp__conductor__GetWorkspaceDiff`. Each subagent must return a list of issues, and each issue must include:
+   - a short description
+   - the reason it was flagged, for example `instruction-file adherence` or `bug`
+
+5. Assign the 4 review passes as follows:
+   - Review pass 1: instruction-file compliance reviewer
+   - Review pass 2: instruction-file compliance reviewer
+   - Review pass 3: bug reviewer
+   - Review pass 4: bug reviewer
+
+6. Instruction-file compliance reviewers must:
+   - audit the diff for `AGENTS.md` or `CLAUDE.md` compliance
+   - when evaluating a file, only consider instruction files in the same directory path or its parents
+   - quote the exact rule when flagging a violation
+
+7. Bug reviewers must:
+   - focus on objective, significant bugs in the changed code
+   - prefer the diff itself and avoid extra context unless needed for validation
+   - ignore nitpicks, speculative concerns, and low-confidence issues
+
+8. Provide every review subagent with the PR title and description so it can judge the changes in the intended product context.
+
+## High-Signal Standard
+
+Only report issues that meet at least one of these:
+
+- objective bugs that will cause incorrect runtime behavior
+- clear, unambiguous `AGENTS.md` or `CLAUDE.md` violations where the exact rule can be quoted
+
+Do not report:
+
+- subjective concerns or suggestions
+- style preferences not explicitly required by scoped instruction files
+- potential issues that might be wrong
+- anything requiring interpretation or speculation
+
+If you are not certain an issue is real, do not flag it.
+
+## Validation Pass
+
+1. For each issue found in the first review pass, launch parallel validation subagents.
+2. Give each validator:
+   - the PR title and description
+   - the issue description
+   - the relevant diff context
+   - any scoped `AGENTS.md` or `CLAUDE.md` paths needed to validate the claim
+3. The validator must confirm with high confidence that the issue is real.
+4. Use stronger reasoning subagents for bugs and logic issues.
+5. Use capable review subagents for `AGENTS.md` or `CLAUDE.md` compliance issues.
+6. Filter out every issue that is not validated.
+
+Examples:
+
+- If the issue is "variable is not defined", validate that the symbol is actually undefined in the changed code.
+- If the issue is an instruction-file violation, validate that the rule applies to that file and is truly violated.
+
+## Commenting
+
+1. Post inline comments for each final validated issue using `mcp__conductor__DiffComment`.
+2. Post only one inline comment per unique issue.
+3. Subagents must never post comments themselves. Only the main agent may post comments.
+4. Inline comments must cite and link the relevant source when applicable. If the issue references an `AGENTS.md` or `CLAUDE.md` rule, include a link to that rule.
+
+## Final Output
+
+Write a final list of issues found, along with the location of each comment, for example:
+
+```md
+### **#1 Empty input causes crash**
+
+If the input field is empty when the page loads, the app will crash.
+
+File: filter-nodes/src/lib/components/ui/input/input.svelte
+
+### **#2 Dead code**
+
+The `getUserData` function is now unused and should be deleted.
+
+File: filter-nodes/src/lib/js/example-module.ts
+```
+
+## False Positives To Exclude
+
+Do not flag:
+
+- pre-existing issues
+- something that appears to be a bug but is actually correct
+- pedantic nitpicks that a senior engineer would not flag
+- issues that a linter would catch
+- general code quality concerns such as missing test coverage or broad security worries, unless explicitly required by scoped instruction files
+- issues mentioned in `AGENTS.md` or `CLAUDE.md` but explicitly silenced in code, such as via a lint-ignore comment
+
+## Constraints
+
+- Do not use `AskUserQuestion`.
+- Complete the review without user intervention.
+- Use the `gh` CLI for GitHub interactions such as fetching PR metadata or posting comments.
+- Do not use web fetch for GitHub tasks.
+
+## Fallbacks
+
+### If subagents are unavailable
+
+Perform the same workflow yourself sequentially:
+
+- instruction-file compliance review
+- bug scan
+- introduced-problem scan
+- issue validation
+
+Then post only the validated, high-confidence issues.
+
+### If the workspace diff tool is unavailable
+
+Use:
+
+```bash
+MERGE_BASE=$(git merge-base origin/main HEAD)
+git diff $MERGE_BASE HEAD
+git diff HEAD
+```
+
+Review both outputs together:
+
+- the first shows committed branch changes relative to the target
+- the second shows uncommitted work in progress
+
+### If git is unavailable or the workspace is not a repo
+
+- `MERGE_BASE` / `git diff` cannot run. Scope the review from an explicit file list in the task, the editor’s change view, or a user-provided diff / patch.
+- Skip `gh` (no PR metadata) and skip `DiffComment` when that tooling is absent or inapplicable. Deliver the **Final Output** markdown issue list only.
+- Still run the same sequential passes: instruction-file compliance (scoped `AGENTS.md` / `CLAUDE.md`), bug review, introduced-problem scan, and validation—then report only validated, high-confidence issues.

@@ -1,0 +1,24 @@
+{
+  "allowedMcpPatterns": [
+    {
+      "pattern": "list",
+      "comment": "Allow listing resources"
+    },
+    {
+      "pattern": "get",
+      "comment": "Allow reading resource details"
+    },
+    {
+      "pattern": "find",
+      "comment": "Allow discovery operations"
+    },
+    {
+      "pattern": "search",
+      "comment": "Allow search operations"
+    },
+    {
+      "pattern": "status",
+      "comment": "Allow status checks"
+    }
+  ]
+}

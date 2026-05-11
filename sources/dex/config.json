@@ -1,0 +1,23 @@
+{
+  "id": "dex_7f12c9a4",
+  "name": "DEX",
+  "slug": "dex",
+  "enabled": true,
+  "provider": "dex",
+  "type": "mcp",
+  "icon": "\ud83e\udde9",
+  "tagline": "Persistent task tracking for multi-session work and automated review flows",
+  "mcp": {
+    "transport": "stdio",
+    "command": "/Users/mattias/Documents/GitHub/Systembolaget-plus/scripts/dex-node24.sh",
+    "args": [
+      "mcp",
+      "--storage-path",
+      "/Users/mattias/Documents/GitHub/Systembolaget-plus/.dex"
+    ],
+    "authType": "none"
+  },
+  "connectionStatus": "untested",
+  "createdAt": 1777225862886,
+  "updatedAt": 1777225862886
+}

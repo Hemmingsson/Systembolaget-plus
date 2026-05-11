@@ -1,0 +1,24 @@
+{
+  "allowedMcpPatterns": [
+    {
+      "pattern": "resolve",
+      "comment": "Allow library resolution operations"
+    },
+    {
+      "pattern": "get",
+      "comment": "Allow documentation fetch operations"
+    },
+    {
+      "pattern": "search",
+      "comment": "Allow documentation search operations"
+    },
+    {
+      "pattern": "find",
+      "comment": "Allow library discovery operations"
+    },
+    {
+      "pattern": "list",
+      "comment": "Allow read-only listing operations"
+    }
+  ]
+}

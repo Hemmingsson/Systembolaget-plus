@@ -1,0 +1,20 @@
+{
+  "id": "ws_726c51d5",
+  "name": "Systembolaget-plus",
+  "slug": "systembolaget-plus",
+  "defaults": {
+    "permissionMode": "safe",
+    "cyclablePermissionModes": [
+      "safe",
+      "allow-all"
+    ],
+    "enabledSourceSlugs": [
+      "dex"
+    ]
+  },
+  "localMcpServers": {
+    "enabled": true
+  },
+  "createdAt": 1777224700955,
+  "updatedAt": 1777225862886
+}

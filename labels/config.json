@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "labels": [
+    {
+      "id": "automation",
+      "name": "Automation",
+      "color": {
+        "light": "#06B6D4",
+        "dark": "#22D3EE"
+      }
+    },
+    {
+      "id": "review",
+      "name": "Review",
+      "color": {
+        "light": "#F59E0B",
+        "dark": "#FBBF24"
+      },
+      "children": [
+        {
+          "id": "approved",
+          "name": "Approved",
+          "color": {
+            "light": "#22C55E",
+            "dark": "#4ADE80"
+          }
+        },
+        {
+          "id": "changes-requested",
+          "name": "Changes Requested",
+          "color": {
+            "light": "#EF4444",
+            "dark": "#F87171"
+          }
+        }
+      ]
+    },
+    {
+      "id": "feature",
+      "name": "Feature",
+      "color": "accent"
+    },
+    {
+      "id": "bug",
+      "name": "Bug",
+      "color": "destructive"
+    },
+    {
+      "id": "refactor",
+      "name": "Refactor",
+      "color": {
+        "light": "#8B5CF6",
+        "dark": "#A78BFA"
+      }
+    },
+    {
+      "id": "research",
+      "name": "Research",
+      "color": {
+        "light": "#A855F7",
+        "dark": "#C084FC"
+      }
+    },
+    {
+      "id": "priority",
+      "name": "Priority",
+      "color": {
+        "light": "#F59E0B",
+        "dark": "#FBBF24"
+      },
+      "valueType": "number"
+    },
+    {
+      "id": "project",
+      "name": "Project",
+      "color": "foreground/50",
+      "valueType": "string"
+    },
+    {
+      "id": "task",
+      "name": "Task",
+      "color": "foreground/60",
+      "valueType": "string"
+    }
+  ]
+}

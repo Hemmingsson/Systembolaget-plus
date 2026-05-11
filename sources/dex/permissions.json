@@ -1,0 +1,8 @@
+{
+  "allowedMcpPatterns": [
+    {
+      "pattern": "list_tasks",
+      "comment": "Allow read-only task listing in Explore mode"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "context7_11acc4d9",
+  "name": "Context7",
+  "slug": "context7",
+  "enabled": true,
+  "provider": "context7",
+  "type": "mcp",
+  "icon": "\ud83d\udcda",
+  "tagline": "Up-to-date library documentation and code examples via Context7 MCP",
+  "mcp": {
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "@upstash/context7-mcp",
+      "--api-key",
+      "ctx7sk-a7a9c423-8320-41bd-9904-8456936110ba"
+    ],
+    "authType": "none"
+  },
+  "connectionStatus": "untested",
+  "createdAt": 1777226034213,
+  "updatedAt": 1777226034213
+}

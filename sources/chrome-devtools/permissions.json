@@ -1,0 +1,28 @@
+{
+  "allowedMcpPatterns": [
+    {
+      "pattern": "list",
+      "comment": "Allow read-only listing operations"
+    },
+    {
+      "pattern": "get",
+      "comment": "Allow read-only inspection operations"
+    },
+    {
+      "pattern": "find",
+      "comment": "Allow discovery operations"
+    },
+    {
+      "pattern": "search",
+      "comment": "Allow search operations"
+    },
+    {
+      "pattern": "snapshot",
+      "comment": "Allow page snapshot operations"
+    },
+    {
+      "pattern": "status",
+      "comment": "Allow read-only status operations"
+    }
+  ]
+}

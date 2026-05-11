@@ -1,0 +1,27 @@
+{
+  "id": "netlify_0e1c9a60",
+  "name": "Netlify",
+  "slug": "netlify",
+  "enabled": true,
+  "provider": "netlify",
+  "type": "mcp",
+  "icon": "\ud83c\udf10",
+  "tagline": "Build, deploy, and manage Netlify sites through the official MCP server",
+  "mcp": {
+    "transport": "stdio",
+    "command": "npx",
+    "args": [
+      "-y",
+      "-p",
+      "@netlify/mcp",
+      "-p",
+      "readable-stream",
+      "netlify-mcp"
+    ],
+    "env": {},
+    "authType": "none"
+  },
+  "connectionStatus": "untested",
+  "createdAt": 1777226034213,
+  "updatedAt": 1777226034213
+}

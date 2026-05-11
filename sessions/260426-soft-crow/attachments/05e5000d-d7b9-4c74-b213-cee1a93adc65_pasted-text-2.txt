@@ -1,0 +1,189 @@
+# Review Implemented Plan
+
+Review the implemented code against `IMPLEMENTATION_PLAN`. Confirm we built what the plan said, updated all required integration points, verified real behavior, and did not introduce avoidable complexity, ambiguity, regressions, or unwanted behavior.
+
+No product code changes by default. This is a review and validation pass.
+
+## Your Process
+
+### Step 1: Read The Plan As A Checklist
+
+Read the implementation plan under review from top to bottom.
+
+Extract:
+
+- each planned task
+- each success condition
+- each verification method
+- any explicit non-goals or scope boundaries
+
+Turn the plan into a concrete checklist before reviewing code.
+
+### Step 2: Load The Right Guidance
+
+Read only the guidance that actually scopes the implemented area:
+
+- nearest `AGENTS.md`
+- the most relevant `.cursor/rules/*.mdc`
+- stack skills only if they directly apply
+
+If the implementation relies on framework or library behavior and there is any uncertainty, use Context7 to verify the current documented behavior instead of guessing.
+
+### Step 3: Map The Plan To The Actual Code
+
+For each plan item:
+
+1. locate the relevant files and entry points
+2. confirm the intended code was actually implemented
+3. confirm all connected call sites, state paths, routes, config, styles, and side effects were updated everywhere needed
+4. note anything missing, partial, overbuilt, or implemented in a different way than the plan promised
+
+Do not stop at the obvious file. Check the full path of the feature through the codebase.
+
+### Step 4: Use Parallel Subagents If Helpful
+
+If subagents are available, launch them in parallel and synthesize the results yourself.
+
+Recommended split:
+
+- Subagent 1: Plan coverage reviewer
+  Compare plan items to code and return `implemented`, `partial`, or `missing` with evidence.
+
+- Subagent 2: Runtime verifier
+  Determine the narrowest meaningful manual verification and execute it with CLI commands or MCP tools. Prefer real runtime checks over static assumptions.
+
+- Subagent 3: Quality reviewer
+  Look for unwanted complexity, ambiguity, partial migrations, dead code, avoidable abstractions, misleading names, and duplicated logic introduced while implementing the plan.
+
+- Subagent 4: Regression reviewer
+  Look for obvious bugs, integration gaps, incorrect assumptions, missing guards, and unwanted behavior introduced by the implementation.
+
+Rules for subagents:
+
+- They must not edit files.
+- They must return evidence, not broad opinions.
+- They must prefer concrete missing work or real risks over style commentary.
+
+### Step 5: Verify Real Behavior
+
+Use the narrowest meaningful verification that can prove the implementation works.
+
+Prefer:
+
+- targeted `npm run` scripts (`check`, `build`, `test`, etc.) from the changed app directory (`filter-nodes`, `showcase-anime`, …)
+- CLI-based manual verification for scripts, services, and data flows
+- MCP browser or desktop tooling for actual UI behavior
+- relevant MCP service tools when the implemented flow depends on an external system and safe read-only validation is possible
+
+Do not rely only on code inspection if the target area is runnable.
+
+For each verification method, record:
+
+- what you ran
+- what behavior you expected
+- what actually happened
+- whether that proves the plan item is complete
+
+### Step 6: Review Completeness, Simplicity, And Risk
+
+For each plan item, review all of the following:
+
+- completeness: was everything in scope actually built?
+- correctness: does the behavior match the intended outcome?
+- verification: do the observed results prove it works?
+- consistency: were all required code paths updated?
+- simplicity: is this the smallest understandable solution?
+- ambiguity: are names, conditions, states, and boundaries clear?
+- regressions: did this introduce any bugs or unwanted behavior?
+
+Call out obvious complexity bottlenecks for non-trivial logic:
+
+- unnecessary indirection
+- extra abstraction layers
+- duplicated logic
+- confusing state flow
+- hot-path work that is broader than needed
+
+### Step 7: Validate Findings Before Reporting
+
+Every reported issue must be backed by direct evidence from:
+
+- the plan
+- the implemented code
+- the verification result
+- framework or library docs when behavior depends on them
+
+Do not report:
+
+- vague discomfort
+- speculative bugs
+- style-only preferences
+- linter-only noise
+- generic testing complaints unless the missing verification means the plan cannot actually be confirmed
+
+## Output
+
+Return a findings report only. Do not update the plan document.
+
+Start with a short overall verdict:
+
+- `complete`
+- `partial`
+- `failed verification`
+
+Then list findings only for things that matter.
+
+Each finding must use this structure:
+
+1. One-sentence finding
+2. Why it is a problem
+3. Optional supporting context or evidence
+4. Proposed solution
+
+Keep the finding sentence short and concrete. Prefer:
+
+- what is missing
+- what is wrong
+- what is too complex or ambiguous
+- what behavior could regress
+
+Use this compact format:
+
+- `Finding: <one sentence>`
+- `Why: <why this matters>`
+- `Evidence: <code path, verification result, or plan mismatch>`
+- `Solution: <smallest fix direction>`
+
+After the findings, include a short verification summary:
+
+- what was tested manually with CLI or MCP tooling
+- what passed
+- what could not be confirmed
+
+## Review Standard
+
+Green flags:
+
+- implementation matches the plan closely
+- behavior was verified in the real runtime
+- solution is direct and easy to follow
+- all affected code paths were updated
+- no obvious regressions were introduced
+
+Red flags:
+
+- plan item implemented only halfway
+- code changed in one place but not in connected areas
+- verification is weak or skipped even though the feature is runnable
+- solution is more abstract or indirect than needed
+- ambiguous naming or state flow makes the implementation harder to trust
+- introduced bugs or behavior drift
+
+## Result
+
+The result should be a concise implementation review report that says:
+
+- whether the implementation should be considered complete
+- which findings were validated
+- what was verified manually
+- the smallest fix for each real problem
