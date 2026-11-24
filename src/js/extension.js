@@ -1,5 +1,5 @@
 import { init } from './main.js'
-import 'regenerator-runtime/runtime'
+
 
 
 

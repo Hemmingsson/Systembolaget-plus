@@ -1,3 +1,18 @@
-.cache
-dist
-node_modules
+.cache/
+.parcel-cache/
+dist/
+node_modules/
+.DS_Store
+
+# Local Craft/DEX workspace state. Keep product source and reusable skills in git.
+.dex/*
+!.dex/.gitkeep
+sessions/
+sources/
+statuses/
+labels/
+config.json
+automations.json
+automations-history.jsonl
+events.jsonl
+views.json

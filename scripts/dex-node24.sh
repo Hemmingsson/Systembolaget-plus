@@ -1,3 +1,8 @@
-#!/usr/bin/env bash
-set -euo pipefail
-exec "/Users/mattias/.nvm/versions/node/v24.15.0/bin/node" "/Users/mattias/Documents/GitHub/Systembolaget-plus/node_modules/@zeeg/dex/dist/index.js" "$@"
+#!/usr/bin/env sh
+set -eu
+# DEX is optional local agent tooling, installed separately from the extension.
+if ! command -v dex >/dev/null 2>&1; then
+  echo 'DEX is not installed. Supply a compatible dex CLI on PATH to use agent tasks.' >&2
+  exit 1
+fi
+exec dex "$@"

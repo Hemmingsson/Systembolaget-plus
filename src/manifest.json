@@ -1,12 +1,11 @@
 {
   "name": "Systembolaget+",
-  "version": "1.1.0",
-  "manifest_version": 2,
-  "description": "Adds 🍷 Vivino, 🍺 Untappd & 🥃 Distiller ratings too systembolaget.se",
-  "homepage_url": "http://mattias.lol",
+  "version": "1.1.1",
+  "manifest_version": 3,
+  "description": "Adds Vivino, Untappd, and Distiller ratings to Systembolaget product pages.",
+  "homepage_url": "https://github.com/Hemmingsson/Systembolaget-plus",
   "author": "Mattias Hemmingsson",
   "permissions": [
-    "*://www.vivino.com/*",
     "storage"
   ],
   "default_locale": "en",
@@ -18,22 +17,23 @@
   "content_scripts": [
     {
       "matches": [
-        "https://www.systembolaget.se/*",
-        "https://untappd.com/*",
-        "https://distiller.com/*"
+        "https://www.systembolaget.se/*"
       ],
       "css": [
-        "scss/styles.scss"
+        "styles/styles.css"
       ],
       "js": [
-        "js/extension.js"
+        "scripts/extension.js"
       ]
     }
   ],
   "background": {
-    "scripts": [
-      "js/background.js"
-    ],
-    "persistent": false
-  }
+    "service_worker": "scripts/background.js"
+  },
+  "minimum_chrome_version": "109",
+  "host_permissions": [
+    "https://www.vivino.com/*",
+    "https://untappd.com/*",
+    "https://distiller.com/*"
+  ]
 }
